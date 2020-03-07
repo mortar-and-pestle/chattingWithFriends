@@ -3,7 +3,7 @@ A simple app to chat with friends! Talk one-on-one with a friend or jump into a 
 
 V1.0
 
-  -Server and clients run on local host&nbsp;
+  -Server and clients run on local host\
   -Each client sends one message and receives one message&nbsp;
   
   
