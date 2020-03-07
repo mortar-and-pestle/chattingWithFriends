@@ -8,6 +8,7 @@ V1.0
   
   
 Todo
-  -Allow each client to send and receive unlimited number of messages
-  -Configure server to handle that as well
+
+  -Allow each client to send and receive unlimited number of messages\
+  -Configure server to handle that as well\
   -Plan is to use threads to implement
