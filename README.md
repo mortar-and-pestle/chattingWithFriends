@@ -15,14 +15,14 @@ v1.0
   
 Todo
 
-  -Test whether the app works with an external network
-  -clean up client display
-  -add friends list
-  -add login/registration
-  -add chatroom
-  -add a way to gracefully close client
-  -check possible exceptions and implement proper ways to handle such exceptions
-  -add GUI
+  -Test whether the app works with an external network\
+  -clean up client display\
+  -add friends list\
+  -add login/registration\
+  -add chatroom\
+  -add a way to gracefully close client\
+  -check possible exceptions and implement proper ways to handle such exceptions\
+  -add GUI\
   -add security(TLS or end-to-end encryption)
 
   
