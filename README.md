@@ -5,7 +5,7 @@ Important Use Instructions:
 
 -If hosting a server, port forwarding may be necessary\
 -The port that the server binds to must be set in the serverProps.txt\
--Clients must know the external IP and port of the server before hand\\
+-Clients must know the external IP and port of the server before hand\
 
 v1.2
   
