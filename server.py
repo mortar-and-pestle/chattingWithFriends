@@ -1,45 +1,38 @@
 import socket
 import time
 import threading
-
-
-def get_ip():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-
-        s.connect(('10.255.255.254', 1))
-        ip = s.getsockname()[0]
-
-    except:
-        ip = '127.0.0.1'
-    finally:
-        s.close()
-
-    return ip
+import sys
 
 
 class Server:
 
-    def __init__(self, port):
-        self.port = port
+    def __init__(self):
+        self.port = self.getConfigFromFile()
         self.headerSize = 10
+        self.serverSocket = self.setupServer()
+        self.runServer()
+
+    def getConfigFromFile(self):
+
+        with open("serverProps.txt", "r") as serverFile:
+            line = serverFile.readline()
+
+        port = line.split("=", 1)[1]
+
+        return int(port)
 
     def setupServer(self):
         # Socket to accept connections
         serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         #Bind host to a local host(for now) and to a specific port
-        serverSocket.bind((socket.gethostname(), self.port))
-        #serverSocket.bind((get_ip(), self.port))
+        serverSocket.bind((self.get_ip(), self.port))
 
-        #Queue only two clients
-        #Experiment later with that value
         serverSocket.listen(5)
 
         return serverSocket
 
     def client1To2(self, client1Socket, client2Socket):
-
         fullMsg = ""
         newMsg = True
 
@@ -75,32 +68,43 @@ class Server:
                 fullMsg = ""
                 newMsg = True
 
+    def get_ip(self):
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+        try:
+            s.connect(('10.255.255.254', 1))
+            ip = s.getsockname()[0]
+        except socket.error:
+            print("Private IP could not be found.")
+            sys.exit()
+        finally:
+            s.close()
+
+        return ip
+
     def runServer(self):
-        serverSocket = self.setupServer()
 
-        print("Server has started")
+        print("Chatting with Friends Server \n\n")
 
-        client1Socket, address1 = serverSocket.accept()
+        client1Socket, address1 = self.serverSocket.accept()
         print(f"Connection formed with {address1}")
-        client2Socket, address2 = serverSocket.accept()
+        client2Socket, address2 = self.serverSocket.accept()
         print(f"Connection formed with: {address2}")
 
-        t1 = threading.Thread(target= self.client1To2, args=[client1Socket, client2Socket])
-        t2 = threading.Thread(target= self.client2To1, args=[client1Socket, client2Socket])
+        t1 = threading.Thread(target=self.client1To2, args=[client1Socket, client2Socket])
+        t2 = threading.Thread(target=self.client2To1, args=[client1Socket, client2Socket])
 
         t1.start()
         t2.start()
 
-        while True:
-            print("Server is finished. Now sleeping.")
-            time.sleep(600)
+        t1.join()
+        t2.join()
 
 
 def main():
 
-    myServer = Server(1234)
-    myServer.setupServer()
-    myServer.runServer()
+    myServer = Server()
 
 
 main()
