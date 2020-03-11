@@ -33,7 +33,7 @@ Todo
   -add a way to gracefully close client\
   -check possible exceptions and implement proper ways to handle such exceptions\
   -add GUI\
-  -add security(TLS or end-to-end encryption)
+  -add security(TLS or end-to-end encryption)\
   -transform into executable
 
   
